@@ -31,6 +31,8 @@ end
 
 module Bundles
   def by_total_posts(size, length = 1)
+    return [] if length > 100
+
     repeated_combination(length)
       .find { |batch| batch.sum(&:size) == size } or by_total_posts(size, length + 1)
   end

@@ -50,5 +50,13 @@ describe Influencer do
         ]
       end
     end
+
+    describe OrderLine[7, 'IMG'] do
+      specify "0 IMG $0" do
+        expect(breakdown.total_posts).to eq 0
+        expect(breakdown.total_cost).to eq 0
+        expect(breakdown.bundles).to match_array []
+      end
+    end
   end
 end
