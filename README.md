@@ -10,3 +10,7 @@ To install gems run:
 To run tests execute:
 
     $ rspec --format doc
+
+To run the solution execute with sample data:
+
+    $ ruby solution.rb 10 IMG 15 FLAC 13 VID

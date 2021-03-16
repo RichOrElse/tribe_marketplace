@@ -1,4 +1,4 @@
-require_relative '../influencer'
+require_relative '../lib/influencer'
 require 'bundler/setup'
 Bundler.setup
 

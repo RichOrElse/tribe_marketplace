@@ -13,19 +13,9 @@ class Influencer
   end
 end
 
-Bundle = Struct.new(:format_code, :size, :cost)
-
-class Order < Struct.new(:bundles)
-  Item = Struct.new(:size, :format_code)
-
-  def total_cost
-    bundles.sum(&:cost)
-  end
-
-  def total_posts
-    bundles.sum(&:size)
-  end
-end
+require_relative 'bundle'
+require_relative 'order'
+require_relative 'order/item'
 
 module Bundles
   def by_total_posts(size, length = 1)
