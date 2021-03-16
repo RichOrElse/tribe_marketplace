@@ -14,36 +14,35 @@ describe Influencer do
     ])
   end
 
-  describe "#charge" do
-    let(:charges) { @influencer.charge([subject]) }
-    let(:breakdown) { charges[subject.format_code]}
+  describe "#receive" do
+    let(:order) { @influencer.receive([subject]) }
 
-    describe OrderLine[10, 'IMG'] do
+    describe Order::Item[10, 'IMG'] do
       specify "10 IMG $800" do
-        expect(breakdown.total_posts).to eq 10
-        expect(breakdown.total_cost).to eq 800
-        expect(breakdown.bundles).to match_array [
+        expect(order.total_posts).to eq 10
+        expect(order.total_cost).to eq 800
+        expect(order.bundles).to match_array [
           Bundle['IMG', 10, 800]
         ]
       end
     end
 
-    describe OrderLine[15, 'FLAC'] do
+    describe Order::Item[15, 'FLAC'] do
       specify "15 FLAC $1957.50" do
-        expect(breakdown.total_posts).to eq 15
-        expect(breakdown.total_cost).to eq 1957.50
-        expect(breakdown.bundles).to match_array [
+        expect(order.total_posts).to eq 15
+        expect(order.total_cost).to eq 1957.50
+        expect(order.bundles).to match_array [
           Bundle['FLAC', 9, 1147.50],
           Bundle['FLAC', 6, 810],
         ]
       end
     end
 
-    describe OrderLine[13, 'VID'] do
+    describe Order::Item[13, 'VID'] do
       specify "13 VID $2370" do
-        expect(breakdown.total_posts).to eq 13
-        expect(breakdown.total_cost).to eq 2370
-        expect(breakdown.bundles).to match_array [
+        expect(order.total_posts).to eq 13
+        expect(order.total_cost).to eq 2370
+        expect(order.bundles).to match_array [
           Bundle['VID', 5, 900],
           Bundle['VID', 5, 900],
           Bundle['VID', 3, 570],
@@ -51,11 +50,24 @@ describe Influencer do
       end
     end
 
-    describe OrderLine[7, 'IMG'] do
+    describe Order::Item[7, 'IMG'] do
       specify "0 IMG $0" do
-        expect(breakdown.total_posts).to eq 0
-        expect(breakdown.total_cost).to eq 0
-        expect(breakdown.bundles).to match_array []
+        expect(order.total_posts).to eq 0
+        expect(order.total_cost).to eq 0
+        expect(order.bundles).to match_array []
+      end
+    end
+
+    describe "with 2 Order Items" do
+      let(:order) { @influencer.receive [Order::Item[10, 'IMG'], Order::Item[5, 'VID']] }
+
+      specify "10 IMG $800. 5 VID $900" do
+        expect(order.total_posts).to eq 15
+        expect(order.total_cost).to eq 1700
+        expect(order.bundles).to match_array [
+          Bundle['IMG', 10, 800],
+          Bundle['VID', 5, 900],
+        ]
       end
     end
   end

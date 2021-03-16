@@ -1,25 +1,23 @@
-class Influencer < Struct.new(:bundles)
+class Influencer
   def initialize(bundles)
-    @bundles_for = bundles.group_by(&:format_code)
-                          .each { |_, group| group.extend Bundles }
-    super
+    @by_format_code = bundles.group_by(&:format_code)
+                             .each { |_, group| group.extend Bundles }
+
+    @bundles_for = Hash.new do |bundles_for, item|
+      bundles_for[item] = @by_format_code[item.format_code].by_total_posts(item.size)
+    end
   end
 
-  def charge(order)
-    order.inject(Hash.new(Breakdown.new [])) do |charged, line|
-      charged[line.format_code] = Breakdown.new(
-        @bundles_for[line.format_code].by_total_posts(line.size)
-      )
-      charged
-    end
+  def receive(items)
+    Order.new items.flat_map(&@bundles_for)
   end
 end
 
 Bundle = Struct.new(:format_code, :size, :cost)
 
-OrderLine = Struct.new(:size, :format_code)
+class Order < Struct.new(:bundles)
+  Item = Struct.new(:size, :format_code)
 
-Breakdown = Struct.new(:bundles) do
   def total_cost
     bundles.sum(&:cost)
   end
