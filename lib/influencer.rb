@@ -1,16 +1,15 @@
 require_relative 'bundle'
 require_relative 'order'
 require_relative 'order/item'
-require_relative 'by_format_code'
+require_relative 'queries/query_object'
+require_relative 'queries/by_format_code'
+require_relative 'queries/by_total_posts'
 
 class Influencer
   def initialize(bundles)
-    @by_format_code = Hash.new do |by, format_code|
-      by[format_code] = bundles.yield_self(&ByFormatCode[format_code])
-    end
-
     @bundles_for = Hash.new do |bundles_for, item|
-      bundles_for[item] = @by_format_code[item.format_code].by_total_posts(item.size)
+      bundles_for[item] = bundles.then(&ByFormatCode).at(item.format_code)
+                                 .then(&ByTotalPosts).at(item.size)
     end
   end
 

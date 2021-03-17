@@ -3,7 +3,7 @@ Command line application
 
 ## Prerequisites
 
-* Ruby 2.5.5
+* Ruby 2.6.3
 
 ## Testing
 
