@@ -1,6 +1,10 @@
 # tribe_marketplace
 Command line application
 
+## Prerequisites
+
+* Ruby 2.5.5
+
 ## Testing
 
 To install gems run:
