@@ -1,3 +1,5 @@
+abort "Invalid input missing format code!" if ARGV.size.odd?
+
 require 'csv'
 require_relative 'lib/influencer'
 

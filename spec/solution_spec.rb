@@ -20,4 +20,11 @@ describe "ruby solution.rb" do
              .to_stdout_from_any_process
     end
   end
+
+  describe "6 FLAC VID" do
+    specify "incomplete input" do
+      command.to output(a_string_including("Invalid input missing format code!"))
+             .to_stderr_from_any_process
+    end
+  end
 end

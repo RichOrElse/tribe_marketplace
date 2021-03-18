@@ -1,3 +1,4 @@
+require_relative 'new_from_row'
 require_relative 'cost_format'
 require_relative 'bundle'
 require_relative 'order'

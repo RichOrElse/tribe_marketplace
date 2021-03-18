@@ -1,6 +1,6 @@
 require 'bigdecimal/util'
 
-class Bundle < Struct.new(:format_code, :size, :cost)
+class Bundle < Struct.new(:format_code, :size, :cost).extend NewFromRow
   def initialize(format_code, size = 1, cost = 0.0)
     super(format_code, size.to_i, cost.to_d)
   end
@@ -17,9 +17,5 @@ class Bundle < Struct.new(:format_code, :size, :cost)
 
   def inspect
     "Bundle['#{format_code}', #{size}, #{cost}]"
-  end
-
-  def self.to_proc
-    -> row { new(*row) }
   end
 end

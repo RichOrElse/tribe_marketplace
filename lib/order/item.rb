@@ -1,6 +1,6 @@
-class Order::Item < Struct.new(:size, :format_code)
-  def self.to_proc
-    proc { |size, code| new(size.to_i, code) }
+class Order::Item < Struct.new(:size, :format_code).extend NewFromRow
+  def initialize(size, format_code)
+    super(size.to_i, format_code)
   end
 
   def to_s
