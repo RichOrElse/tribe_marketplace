@@ -27,4 +27,10 @@ describe "ruby solution.rb" do
              .to_stderr_from_any_process
     end
   end
+
+  describe "10 TXT" do
+    specify "unknown format code" do
+      command.to output.to_stdout_from_any_process
+    end
+  end
 end

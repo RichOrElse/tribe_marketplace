@@ -1,6 +1,6 @@
 class BySize < QueryObject
   def combined(total, length = 1)
-    return [] if length > 100
+    return [] if length > total
 
     repeated_combination(length)
       .find { |combination| combination.sum(&:size) == total } || combined(total, length + 1)
