@@ -1,3 +1,4 @@
+require_relative 'cost_format'
 require_relative 'bundle'
 require_relative 'order'
 require_relative 'order/item'

@@ -1,6 +1,8 @@
 class Breakdown < Struct.new(:total, :size, :cost)
+  using CostFormat
+
   def to_s
-    "\t#{total} x #{size} $%.2f" % cost
+    "\t#{total} x #{size} #{cost.format}" 
   end
 
   def self.to_proc

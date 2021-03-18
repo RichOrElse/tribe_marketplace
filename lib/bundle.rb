@@ -9,11 +9,17 @@ class Bundle < Struct.new(:format_code, :size, :cost)
     Bundle.new format_code, size + other.size, cost + other.cost
   end
 
+  using CostFormat
+
   def to_s
-    "#{size} #{format_code} $%.2f" % cost
+    "#{size} #{format_code} #{cost.format}"
   end
 
   def inspect
     "Bundle['#{format_code}', #{size}, #{cost}]"
+  end
+
+  def self.to_proc
+    -> row { new(*row) }
   end
 end
