@@ -4,6 +4,6 @@ class Breakdown < Struct.new(:total, :size, :cost)
   end
 
   def self.to_proc
-    -> size, bundles { new(bundles.size, size.to_i, bundles.inject(:+).cost) }
+    -> size, bundles { new bundles.size, size.to_i, bundles.sum(&:cost) }
   end
 end
