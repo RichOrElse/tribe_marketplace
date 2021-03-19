@@ -1,9 +1,8 @@
 class BySize < QueryObject
-  def combined(total, length = 1, possible = max_combinations_within(total))
-    return [] if length > possible
-
-    repeated_combination(length)
-      .find { |combination| combination.sum(&:size) == total } || combined(total, length + 1, possible)
+  def combined(total)
+    1.upto(max_combinations_within total)
+     .flat_map { |length| repeated_combination(length).to_a }
+     .find { |combination| combination.sum(&:size) == total } || []
   end
 
   def breakdowns
