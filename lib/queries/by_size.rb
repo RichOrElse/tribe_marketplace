@@ -1,4 +1,8 @@
 class BySize < QueryObject
+  def initialize(all)
+    super all.sort_by(&:size)
+  end
+
   def combined(total)
     1.upto(max_combinations_within total)
      .flat_map { |length| repeated_combination(length).to_a }

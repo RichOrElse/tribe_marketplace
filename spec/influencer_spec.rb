@@ -11,7 +11,7 @@ describe Influencer do
       Bundle[ 'VID',  3, 570],
       Bundle[ 'VID',  5, 900],
       Bundle[ 'VID',  9, 1530],
-    ])
+    ].reverse)
   end
 
   describe "#receive" do
