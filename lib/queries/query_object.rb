@@ -5,6 +5,10 @@ class QueryObject < SimpleDelegator
     method(:new).to_proc
   end
 
+  def tail
+    @tail ||= self.class.new drop 1
+  end
+
   def minimum(key, *options)
     map(&key).min(*options)
   end

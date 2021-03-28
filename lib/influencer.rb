@@ -9,13 +9,13 @@ require_relative 'queries/by_size'
 
 class Influencer
   def initialize(bundles)
-    @bundles_for = Hash.new do |bundles_for, item|
-      bundles_for[item] = bundles.then(&ByFormatCode).at(item.format_code)
-                                 .then(&BySize).combined(item.size)
+    @breakdowns_for = Hash.new do |breakdowns_for, item|
+      breakdowns_for[item] = bundles.then(&ByFormatCode).at(item.format_code)
+                                    .then(&BySize).breakdown(item.size).reject(&:empty?)
     end
   end
 
   def receive(items)
-    Order.new items.map(&@bundles_for)
+    Order.new items.map(&@breakdowns_for).reject(&:empty?)
   end
 end

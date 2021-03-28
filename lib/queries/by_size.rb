@@ -3,13 +3,19 @@ class BySize < QueryObject
     super all.sort_by(&:size).reverse!
   end
 
-  def combined(total)
-    repeated_combinations_in(min_to_max_combinations_within total)
-      .find { |combination| combination.sum(&:size) == total } || []
-  end
+  def breakdown(total)
+    return [] if none? || total <= 0
 
-  def breakdowns
-    group_by(&:size).map(&Breakdown)
+    (total / first.size.to_f).ceil.downto(0) do |scale|
+      head_total = first.size * scale
+      tail_total = total - head_total
+      breakdowns = tail.breakdown tail_total
+      if breakdowns.sum(&:size) == tail_total
+        return [Breakdown[scale, first]] + breakdowns
+      end
+    end
+
+    []
   end
 
   private

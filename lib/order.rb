@@ -1,21 +1,17 @@
 require_relative 'breakdown'
 
 class Order < Struct.new(:lines)
-  def bundles
-    lines.flatten
-  end
-
   def total_cost
-    bundles.sum(&:cost)
+    lines.flatten.sum(&:cost)
   end
 
   def total_posts
-    bundles.sum(&:size)
+    lines.flatten.sum(&:size)
   end
 
   def with_breakdowns
-    lines.each_with_object({}) do |line, with|
-      with[line.reduce(:+)] = line.then(&BySize).breakdowns
+    lines.each_with_object({}) do |breakdowns, with|
+      with[breakdowns.map(&:to_bundle).reduce(:+)] = breakdowns
     end
   end
 

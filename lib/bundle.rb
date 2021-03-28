@@ -9,6 +9,18 @@ class Bundle < Struct.new(:format_code, :size, :cost).extend NewFromRow
     Bundle.new format_code, size + other.size, cost + other.cost
   end
 
+  def * scale
+    Bundle.new format_code, size * scale, cost * scale
+  end
+
+  def coerce(scale)
+    [self, scale]
+  end
+
+  def empty?
+    size.zero?
+  end
+
   using CostFormat
 
   def to_s
