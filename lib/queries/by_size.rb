@@ -4,7 +4,7 @@ class BySize < QueryObject
   end
 
   def breakdown(total)
-    return [] if none? || total <= 0
+    return [] if none? || total <= 0 || (total % gcd).nonzero?
 
     (total / first.size.to_f).ceil.downto(0) do |scale|
       head_total = first.size * scale
@@ -16,6 +16,10 @@ class BySize < QueryObject
     end
 
     []
+  end
+
+  def gcd
+    map(&:size).inject(:gcd)
   end
 
   private

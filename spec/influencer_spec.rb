@@ -60,6 +60,14 @@ describe Influencer do
       end
     end
 
+    describe Order::Item[9913, 'IMG'] do
+      specify "big order" do
+        expect(order.total_posts).to eq 0
+        expect(order.total_cost).to eq 0
+        expect(order.with_breakdowns).to be_empty
+      end
+    end
+
     describe "with 2 Order Items" do
       let(:order) { @influencer.receive [Order::Item[10, 'IMG'], Order::Item[5, 'VID']] }
 

@@ -3,8 +3,13 @@ require 'bundler/setup'
 Bundler.setup
 
 require "byebug"
+require "timeout"
 
 RSpec.configure do |config|
-  # some (optional) config here
+  config.around(:each) do |example|
+    Timeout::timeout(2) {
+      example.run
+    }
+  end
 end
 
