@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Influencer do
-  before do
+  before(:all) do
     @influencer = Influencer.new([
       Bundle[ 'IMG',  5, 450],
       Bundle[ 'IMG', 10, 800],

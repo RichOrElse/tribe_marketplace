@@ -5,3 +5,6 @@ group :test, :development do
   gem 'rspec', '~> 3.10'
   gem 'byebug'
 end
+
+gem 'simplecov', require: false, group: :test
+

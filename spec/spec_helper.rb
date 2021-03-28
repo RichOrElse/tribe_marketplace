@@ -1,3 +1,7 @@
+
+require 'simplecov'
+SimpleCov.start
+
 require_relative '../lib/influencer'
 require 'bundler/setup'
 Bundler.setup
@@ -12,4 +16,3 @@ RSpec.configure do |config|
     }
   end
 end
-

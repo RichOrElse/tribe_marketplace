@@ -17,17 +17,9 @@ class Bundle < Struct.new(:format_code, :size, :cost).extend NewFromRow
     [self, scale]
   end
 
-  def empty?
-    size.zero?
-  end
-
   using CostFormat
 
   def to_s
     "#{size} #{format_code} #{cost.format}"
-  end
-
-  def inspect
-    "Bundle['#{format_code}', #{size}, #{cost}]"
   end
 end

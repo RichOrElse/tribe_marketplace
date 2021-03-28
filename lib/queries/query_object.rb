@@ -8,18 +8,4 @@ class QueryObject < SimpleDelegator
   def tail
     @tail ||= self.class.new drop 1
   end
-
-  def minimum(key, *options)
-    map(&key).min(*options)
-  end
-
-  def maximum(key, *options)
-    map(&key).max(*options)
-  end
-
-  def repeated_combinations_in(lengths, &blk)
-    return to_enum :repeated_combinations_in, lengths if blk.nil?
-
-    lengths.flat_map { |length| repeated_combination(length).map(&blk) }
-  end
 end

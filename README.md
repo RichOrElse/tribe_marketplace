@@ -15,6 +15,10 @@ To run tests execute:
 
     $ rspec --format doc
 
+Then open code coverage report in the browser:
+
+    $ open coverage/index.html
+
 To run the solution execute with sample data:
 
     $ ruby solution.rb 10 IMG 15 FLAC 13 VID
